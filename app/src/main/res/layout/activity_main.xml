@@ -5,7 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#efefef"
     tools:context="com.modbusapp.MainActivity">
 
     <LinearLayout
@@ -32,25 +32,28 @@
             android:layout_height="1dp" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="56dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:padding="15dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_arrow_back"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_connection_status"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/red"
+        android:gravity="center"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="3dp"
+        android:text="Bağlı Değil"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/btnConnect"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilIpAddress"
+        android:id="@+id/ip_address_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
         android:hint="İp Adresi"
         android:padding="0dp"
         app:boxStrokeColor="@color/colorPrimaryDark"
@@ -58,10 +61,10 @@
         app:hintTextColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/tv_connection_status">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tieIpAddress"
+            android:id="@+id/et_ip_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -73,11 +76,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilPort"
+        android:id="@+id/port_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:hint="Port Numarası"
         app:boxStrokeColor="@color/colorPrimaryDark"
@@ -86,10 +89,10 @@
         app:hintTextColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tilIpAddress">
+        app:layout_constraintTop_toBottomOf="@id/ip_address_layout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiePort"
+            android:id="@+id/et_port"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -100,61 +103,137 @@
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/btnConnect"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
+        android:minWidth="100dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/green"
         android:backgroundTint="@color/button_color"
-        android:paddingHorizontal="30dp"
-        android:text="Bağlan"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        android:text="Bağlantı\nKur"
         android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/port_layout"
+        app:layout_constraintEnd_toEndOf="@id/port_layout"
+        app:layout_constraintTop_toTopOf="@id/ip_address_layout" />
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/button_color"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tilPort" />
+        app:layout_constraintTop_toBottomOf="@id/port_layout" />
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="50dp"
-        android:gravity="center_vertical"
-        android:text="IŞIK-1"
-        android:textColor="@color/black"
-        android:textStyle="bold"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnConnect" />
+        app:layout_constraintTop_toBottomOf="@id/port_layout">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        app:layout_constraintStart_toEndOf="@id/tv1"
-        app:layout_constraintTop_toBottomOf="@id/tv1"
-        app:layout_constraintTop_toTopOf="@id/tv1" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="0dp"
-        android:gravity="center_vertical"
-        android:text="IŞIK-2"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv1" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/all_channels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_line">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        app:layout_constraintStart_toEndOf="@id/tv2"
-        app:layout_constraintTop_toBottomOf="@id/tv2"
-        app:layout_constraintTop_toTopOf="@id/tv2" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
 
+                <TextView
+                    android:id="@+id/tv_all_channel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="30dp"
+                    android:text="Tüm Işıklar"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_open_all"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/green"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:text="Aç"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_all_channel" />
+
+                <TextView
+                    android:id="@+id/tv_close_all"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/red"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:text="Kapat"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toBottomOf="@id/tv_all_channel" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/v_line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/button_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/all_channels" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="10dp"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/v_line2" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
